@@ -1,0 +1,1 @@
+This repo is intended for use of learning how to effectively use Regular Expressions in Python.
