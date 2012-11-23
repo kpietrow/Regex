@@ -18,7 +18,7 @@ def open_file(fileName):
 def main():
     # open file
     text = open_file('/Users/User/Documents/Python 2.7.3/Regex/words.txt')
-    results = re.findall(r"[A-Z]+", text)
+    results = re.findall(r"[S]+[A-Z]+", text)
     print results
     return
 
