@@ -18,6 +18,8 @@ def input_file(fileName):
 
 def search_file(searchText, text):
     """Performs RegEx() with user's input"""
+    result = re.findall(r"[a-zA-Z]+", text)
+    print result
     return re.findall(searchText, text)
 
         
