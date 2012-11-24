@@ -18,8 +18,6 @@ def input_file(fileName):
 
 def search_file(searchText, text):
     """Performs RegEx() with user's input"""
-    result = re.findall(r"[a-zA-Z]+", text)
-    print result
     return re.findall(searchText, text)
 
         
@@ -27,8 +25,8 @@ def search_file(searchText, text):
 def main():
     # open file
     text = input_file('/Users/User/Documents/Python 2.7.3/Regex/TheVerge.txt')
-    userInput = raw_input("What Regular Expression do you want searched? Please\n enter any and all parameters:")
-    output = search_file(userInput, text)
+    userInput = raw_input("What Regular Expression do you want searched? Please enter any and all parameters (r will be added automatically, as wil standard quotation marks):")
+    output = search_file(userInput, "r"+text)
     print output
     return
 
