@@ -1,6 +1,16 @@
 # Kevin Pietrow
 # Regex searching on large text file
 
+
+# NOTE: Need to create a class for regex() search results. This 2D
+# Array approach has limited capacity, and is not OOP centric.
+# Objects are a better approach and should be implemented as
+# soon as possible. Even if the search and get result functions
+# are not a part of the class, the results should still be
+# stored as objects.
+
+
+
 import re
 import sys
 import os
@@ -12,6 +22,7 @@ for i in range(1):
 
 # set up global counter for amount of searches
 totalSearches = 0
+
 
 def input_file():
     """Open file"""
@@ -29,7 +40,8 @@ def input_file():
     text = rt.read()
     return text
 
-# Necessary code
+# Necessary code. This opens up the text file that the user requested.
+
 
 def new_search_regex(textFile):
     """Finds users search parameters, then performs RegEx() with user's input"""
@@ -37,32 +49,26 @@ def new_search_regex(textFile):
     global totalSearches
     global allSearchResults
 
-    # ask if user wants 'raw' mode for regular expressions
-    userParams.append((raw_input("Would you like to add 'r' in front of the expression? (y/n): ")).lower())
     # ask user for regular expression to be searched
-    userParams.append(raw_input("Please enter the Regular Expression to be searched (outside quotation marks will be added automatically): "))
+    userParams.append(raw_input("Please enter the Regular Expression to be searched: "))
+    print userParams[0]
     totalSearches += 1
 
     # perform regex search
-    if userParams[0] == "y":
-        foundRegex = re.findall('r' + userParams[1], textFile)
-    elif userParams[0] == "n":
-        foundRegex = re.findall(userParams[1], textFile)
-    else:
-        foundRegex = re.findall(userParams[1], textFile)
+    foundRegex = re.findall(userParams[0], textFile)
 
     # if Regex search successful
-    if foundRegex is not None:
+    if len(foundRegex) != 0:
         print foundRegex
 
         # store result and search parameters in global 2D list
         if totalSearches == 1:
-            allSearchResults[0] = [foundRegex, userParams[0], userParams[1], totalSearches]
+            allSearchResults[0] = [foundRegex, userParams[0], totalSearches]
             print "Result has been stored. Its search number is 1."
         elif totalSearches == 21:
             print "I am sorry, but you have too many saved results to store another value."
         else:
-            allSearchResults[totalSearches - 1] = [foundRegex, userParams[0], userParams[1], totalSearches]
+            allSearchResults[totalSearches - 1] = [foundRegex, userParams[0], totalSearches]
             print "Result has been stored. Its search number is " + str(totalSearches)
 
     # if Regex search unsuccessful
@@ -71,7 +77,8 @@ def new_search_regex(textFile):
 
     return
 
-# One of the menu options. Will handle both querying user and searching for regex
+# One of the menu options. Will handle
+# both querying user and searching for regex
 
 
 
@@ -123,14 +130,14 @@ def search_past_result():
         if userInput == "1":
             searchNumber = int(raw_input("Please input search number: "))
             for sublist in allSearchResults:
-                if searchNumber == sublist[3]:
+                if searchNumber == sublist[2]:
                     print sublist
 
         # search for search string
         elif userInput == "2":
             searchString = raw_input("Please input search string: ")
             for sublist in allSearchResults:
-                if searchString == sublist[2]:
+                if searchString == sublist[1]:
                     print sublist
 
         # search for past results
