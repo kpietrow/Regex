@@ -16,9 +16,23 @@ import sys
 import os
 
 # set up 2D list
+"""
 allSearchResults = [None] * 50
 for i in range(1):
     allSearchResults[i] = [None] * 4
+"""
+
+# Class for searches
+class Reg_Search(object):
+
+    def __init__(self, expression, result, search_number):
+        self.expression = expression
+        self.result = result
+        self.search_number = search_number
+
+    def display_search(self):
+        print "Search number: " + self.search_number + "\n\nExpression searched: " + self.expression +
+        "\n\nResult: " + self.result
 
 # set up global counter for amount of searches
 totalSearches = 0
@@ -45,17 +59,16 @@ def input_file():
 
 def new_search_regex(textFile):
     """Finds users search parameters, then performs RegEx() with user's input"""
-    userParams = []
     global totalSearches
     global allSearchResults
 
     # ask user for regular expression to be searched
-    userParams.append(raw_input("Please enter the Regular Expression to be searched: "))
-    print userParams[0]
+    expression = raw_input("Please enter the Regular Expression to be searched: "))
+    print expression
     totalSearches += 1
 
     # perform regex search
-    foundRegex = re.findall(userParams[0], textFile)
+    foundRegex = re.findall(expression, textFile)
 
     # if Regex search successful
     if len(foundRegex) != 0:
@@ -63,7 +76,7 @@ def new_search_regex(textFile):
 
         # store result and search parameters in global 2D list
         if totalSearches == 1:
-            allSearchResults[0] = [foundRegex, userParams[0], totalSearches]
+            allSearchResults[0] = [foundRegex, expression, totalSearches]
             print "Result has been stored. Its search number is 1."
         elif totalSearches == 21:
             print "I am sorry, but you have too many saved results to store another value."
@@ -160,7 +173,7 @@ def search_past_result():
 
 
 # This function is necessary.
-#Need to decide how it returns the searched for result,
+# Need to decide how it returns the searched for result,
 # and need to build error checking into the search
 
 # Added more search options
