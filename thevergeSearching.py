@@ -74,12 +74,12 @@ def new_search_regex(textFile):
     foundRegex = re.findall(expression, textFile)
 
     # if Regex search successful
-    if len(foundRegex) != 0:
+    if foundRegex != None:
 
     # Note: This ^ does not successfully determine anything.
     # Needs work
 
-        print foundRegex
+        print "Result: " + foundRegex
 
         # create object for result, store in global array
         reg_object = Reg_Search(totalSearches, expression, foundRegex)
@@ -153,7 +153,7 @@ def search_past_result():
         if userInput == "1":
             search = int(raw_input("Please input search number: "))
             try:
-                allSearchResults[search].display_search()
+                allSearchResults[search - 1].display_search()
             except IndexError:
                 print "Could not locate data. Please try different search criteria."
 
@@ -197,7 +197,7 @@ def search_past_result():
             if userInput == "n":
                 return
             elif userInput == "y":
-                continue
+                break
             else:
                 print "Error. Invalid response. Please try again"
 
@@ -214,7 +214,7 @@ def search_past_result():
 
 def main():
     # Print initial greeting
-    print "Hello, and welcome to 'Searching TheVerge'!."
+    print "Hello, and welcome to The Regec() Searcher!"
     text = input_file()            # Call function to obtain search file
     main_menu(text)                # Call the main menu function
     return
