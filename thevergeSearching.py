@@ -25,10 +25,10 @@ for i in range(1):
 # Class for searches
 class Reg_Search(object):
 
-    def __init__(self, expression, result, search_number):
+    def __init__(self, search_number, expression, result):
+        self.search_number = search_number
         self.expression = expression
         self.result = result
-        self.search_number = search_number
 
     def display_search(self):
         print "Search number: " + self.search_number + "\n\nExpression searched: " + self.expression +
@@ -74,15 +74,9 @@ def new_search_regex(textFile):
     if len(foundRegex) != 0:
         print foundRegex
 
-        # store result and search parameters in global 2D list
-        if totalSearches == 1:
-            allSearchResults[0] = [foundRegex, expression, totalSearches]
-            print "Result has been stored. Its search number is 1."
-        elif totalSearches == 21:
-            print "I am sorry, but you have too many saved results to store another value."
-        else:
-            allSearchResults[totalSearches - 1] = [foundRegex, userParams[0], totalSearches]
-            print "Result has been stored. Its search number is " + str(totalSearches)
+        # create object for result, store in global array
+        reg_object = Reg_Search(totalSearches, expression, foundRegex)
+        allSearchResults[totalSearches - 1] = reg_object
 
     # if Regex search unsuccessful
     else:
@@ -132,7 +126,7 @@ def search_past_result():
     while True:
         print "\nHow would you like to search for the prior result?"
         print "1- Search number"
-        print "2- Search string"
+        print "2- Search expression"
         print "3- Search result"
         print "4- Exit to main menu"
         userInput = raw_input("Selection: ")
@@ -141,28 +135,23 @@ def search_past_result():
 
         # search for search number
         if userInput == "1":
-            searchNumber = int(raw_input("Please input search number: "))
-            for sublist in allSearchResults:
-                if searchNumber == sublist[2]:
-                    print sublist
+            search = int(raw_input("Please input search number: "))
+            reg_object = allSearchResults[searchNumber - 1]        # get from global array
 
         # search for search string
         elif userInput == "2":
-            searchString = raw_input("Please input search string: ")
-            for sublist in allSearchResults:
-                if searchString == sublist[1]:
-                    print sublist
+            search = raw_input("Please input search string: ")
 
         # search for past results
         elif userInput == "3":
-            searchResult = raw_input("Please input search result: ")
-            for sublist in allSearchResults:
-                if searchResult == sublist[0]:
-                    print sublist
+            search = raw_input("Please input search result: ")
 
         # exit to main menu
         elif userInput == "4":
             return
+
+        else:
+            continue
 
     # ask user if they want to search prior results again
         userInput = raw_input("Would you like find another prior result? (y/n): ").lower()
