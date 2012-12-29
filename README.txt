@@ -1,5 +1,9 @@
 This repo is intended for use of learning how to effectively use Regular Expressions in Python.
 
-RegexWork.py is a text searcher for the words.txt file, which simply contains a number of common words. This .py file is currently configured to search for words beginning in 'S'.
+words.txt and theVerge.txt are both sample text files used for testing this script.
 
-thevergeSearching.py is a searcher for the TheVerge.txt file. This .py file accepts user input for the Regex() search string. TheVerge.txt is a file of source code taken from one of the web pages authored by TheVerge.
+RegSearcher.py is a script that allows user to select any file on their computer for Regular Expression searches, and then queries the user for Regex expressions to search.
+
+Results are stored as objects in a global array, and can also be accessed in the script by the user. In future versions this result data will be stored in persistent storage.
+
+Python 2.7.3 was used as the language version.
