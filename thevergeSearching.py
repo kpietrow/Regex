@@ -26,9 +26,10 @@ totalSearches = 0
 class Reg_Search(object):
 
     def __init__(self, search_number, expression, result):
-        self.search_number = search_number    # Global search number
-        self.expression = expression          # Regular expression searched
-        self.result = result                  # Result of regex() search
+        self.search_number = search_number         # Global search number
+        self.expression = expression               # Regular expression searched
+        self.result = str(result)                  # Result of regex() search
+                                                   # Convert to string for easier use later
 
     def display_search(self):
         # prints out object information
@@ -62,24 +63,27 @@ def input_file():
 
 
 def new_search_regex(textFile):
-    """Finds users search parameters, then performs RegEx() with user's input"""
+    """Query for input, then performs RegEx() with user's input"""
     global totalSearches
     global allSearchResults
 
     # ask user for regular expression to be searched
     expression = raw_input("Please enter the Regular Expression to be searched: ")
-    totalSearches += 1
 
-    # perform regex search
-    foundRegex = re.findall(expression, textFile)
+    # perform initial regex search
+    foundRegex = re.search(expression, textFile)
 
     # if Regex search successful
     if foundRegex != None:
 
-    # Note: This ^ does not successfully determine anything.
-    # Needs work
+        # Do complete regex search
+        foundRegex = re.findall(expression, textFile)
 
-        print "Result: " + foundRegex
+        # Print result
+        print "Result: " + str(foundRegex)
+
+        # Increment global total
+        totalSearches += 1
 
         # create object for result, store in global array
         reg_object = Reg_Search(totalSearches, expression, foundRegex)
@@ -151,16 +155,17 @@ def search_past_result():
 
         # search for search number
         if userInput == "1":
-            search = int(raw_input("Please input search number: "))
+            search = int(raw_input("\nPlease input search number: "))
             try:
                 allSearchResults[search - 1].display_search()
             except IndexError:
                 print "Could not locate data. Please try different search criteria."
+                continue
 
         # query for search expression
         elif userInput == "2":
             unsuccessful = True
-            search = raw_input("Please input expression: ")     # Query user for expression to search for
+            search = raw_input("\nPlease input expression: ")     # Query user for expression to search for
             for item in allSearchResults:                       # Runs through global array
                 if search == item.expression:                   # If a match for object property
                     item.display_search()                       # Display object
@@ -168,11 +173,12 @@ def search_past_result():
 
             if unsuccessful:
                 print "Could not locate data. Please try different search criteria."
+                continue
 
         # query for search result
         elif userInput == "3":
             unsuccessful = True
-            search = raw_input("Please input search result: ")
+            search = raw_input("\nPlease input search result: ")
             for item in allSearchResults:
                 if search == item.result:
                     item.display_search()
@@ -180,6 +186,7 @@ def search_past_result():
 
             if unsuccessful:
                 print "Could not locate data. Please try different search criteria."
+                continue
 
         # Note: this section is broken. Must determine how to effectively
         # search for the result criteria
@@ -214,7 +221,7 @@ def search_past_result():
 
 def main():
     # Print initial greeting
-    print "Hello, and welcome to The Regec() Searcher!"
+    print "Hello, and welcome to The Regex() Searcher!"
     text = input_file()            # Call function to obtain search file
     main_menu(text)                # Call the main menu function
     return
