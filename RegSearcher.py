@@ -1,16 +1,6 @@
 # Kevin Pietrow
 # Regex searching on large text file
 
-
-# NOTE: Need to create a class for regex() search results. This 2D
-# Array approach has limited capacity, and is not OOP centric.
-# Objects are a better approach and should be implemented as
-# soon as possible. Even if the search and get result functions
-# are not a part of the class, the results should still be
-# stored as objects.
-
-
-
 import re
 import sys
 import os
@@ -67,11 +57,18 @@ def new_search_regex(textFile):
     global totalSearches
     global allSearchResults
 
-    # ask user for regular expression to be searched
-    expression = raw_input("Please enter the Regular Expression to be searched: ")
-
     # perform initial regex search
-    foundRegex = re.search(expression, textFile)
+    while 1:
+        try:
+            # ask user for regular expression to be searched
+            expression = raw_input("Please enter the Regular Expression to be searched: ")
+            foundRegex = re.search(expression, textFile)
+        except sre_constants.error:
+            print "Bad character range for the Regular Expression. Please try another"
+            continue
+        else:
+            break
+
 
     # if Regex search successful
     if foundRegex != None:
@@ -166,9 +163,9 @@ def search_past_result():
         elif userInput == "2":
             unsuccessful = True
             search = raw_input("\nPlease input expression: ")     # Query user for expression to search for
-            for item in allSearchResults:                       # Runs through global array
-                if search == item.expression:                   # If a match for object property
-                    item.display_search()                       # Display object
+            for item in allSearchResults:                         # Runs through global array
+                if search == item.expression:                     # If a match for object property
+                    item.display_search()                         # Display object
                     unsuccessful = False
 
             if unsuccessful:
@@ -230,11 +227,6 @@ def main():
 
 main()
 
-
-
-# Ultimately, need to work out return sequence for values,
-# which functions are necessary,
-# and simplify the code where I can.
 
 # Also, past search section needs work
 # Need to figure out how to keep these as persistent values
