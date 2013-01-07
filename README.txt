@@ -6,4 +6,8 @@ RegSearcher.py is a script that allows user to select any file on their computer
 
 Results are stored as objects in a global array, and can also be accessed in the script by the user. In future versions this result data will be stored in persistent storage.
 
+RegSearcher_withDatabase.py will incorporate database storage into the RegSearcher.py script.
+
+SearchFunctions.py and RegClass.py are modules for the RegSearcher.py script
+
 Python 2.7.3 was used as the language version.
